@@ -5,8 +5,13 @@ XrayR 寄生模式配置生成器 (v3.6 Fixed)
 修复: proxy-node 映射关系 / 地区分类准确性
 适用于: Linux 虚拟机环境
 """
+import sys
+print("DEBUG: Script started", file=sys.stderr)
+
 import requests
+print("DEBUG: requests imported", file=sys.stderr)
 import yaml
+print("DEBUG: yaml imported", file=sys.stderr)
 import json
 import re
 import os
@@ -16,6 +21,8 @@ import hashlib
 import random
 import shutil
 import subprocess
+
+print("DEBUG: All imports done", file=sys.stderr)
 
 # --- 颜色常量 ---
 BLUE = '\033[0;34m'
@@ -44,6 +51,8 @@ REGION_MAP = {
     'SG': ['SG', 'Singapore', '新加坡'],
     'US': ['US', 'United States', '美国', 'USA']
 }
+
+print("DEBUG: Constants defined", file=sys.stderr)
 
 def get_input(prompt, default=""):
     text = f"{prompt} [{default}]: " if default else f"{prompt}: "
@@ -281,9 +290,13 @@ def input_panels():
     return panels
 
 def main():
+    print("DEBUG: main() called", file=sys.stderr)
+    
     print(f"{CYAN}{'='*60}{PLAIN}")
     print(f"{CYAN}XrayR 寄生模式配置生成器 v3.6 Fixed{PLAIN}")
     print(f"{CYAN}{'='*60}{PLAIN}\n")
+    
+    print("DEBUG: Title printed", file=sys.stderr)
     
     # 1. 输入面板信息
     panels = input_panels()
@@ -418,7 +431,10 @@ def main():
     print(f"{GREEN}配置生成完成！{PLAIN}")
     print(f"{CYAN}{'='*60}{PLAIN}")
 
+print("DEBUG: Functions defined", file=sys.stderr)
+
 if __name__ == "__main__":
+    print("DEBUG: __main__ block entered", file=sys.stderr)
     try:
         main()
     except KeyboardInterrupt:
@@ -427,3 +443,5 @@ if __name__ == "__main__":
         print(f"\n{RED}错误: {e}{PLAIN}")
         import traceback
         traceback.print_exc()
+
+print("DEBUG: Script end", file=sys.stderr)
