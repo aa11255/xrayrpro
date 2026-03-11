@@ -1,0 +1,66 @@
+# OpenClaw workspace files
+.clawdhub/
+.learnings/
+.openclaw/
+AGENTS.md
+AGENT-ONTOLOGY.md
+HEARTBEAT.md
+IDENTITY.md
+MEMORY.md
+SESSION-STATE.md
+SOUL.md
+TOOLS.md
+USER.md
+MAX-EVOLUTION*.md
+memory/
+logs/
+
+# Project directories
+Agent-S/
+clawx-source/
+deploy/
+maxapi/
+new-api/
+sub2api/
+skills/
+xboard-plugins/
+prediction-market/
+EZ-THEME-R/
+
+# Temporary files
+*.pyc
+__pycache__/
+*.log
+*.tmp
+dump.rdb
+*.zip
+*.msi
+
+# Screenshots
+*.png
+*.jpg
+*.jpeg
+
+# Scripts (keep only the main parasite script)
+check*.js
+fix*.cjs
+fix*.py
+gen*.py
+setup*.cjs
+tmp*.py
+whisper*.py
+whisper*.json
+whisper*.txt
+wechat*.py
+package*.py
+install*.ps1
+qc
+query
+
+# Skill packages
+*.skill
+tavily-search/
+tavily-search-README.md
+
+# Diagrams
+*.html
