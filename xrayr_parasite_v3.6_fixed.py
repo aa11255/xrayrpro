@@ -145,6 +145,53 @@ def parse_trojan(uri):
     except:
         return None
 
+def parse_vless(uri):
+    """解析 vless:// 链接"""
+    try:
+        # vless://uuid@server:port?params#name
+        match = re.match(r'vless://([^@]+)@([^:]+):(\d+)(\?[^#]*)?(#.*)?', uri)
+        if not match:
+            return None
+        
+        uuid, server, port, params, name = match.groups()
+        
+        # 解析参数
+        sni = server
+        security = 'none'
+        flow = ''
+        if params:
+            sni_match = re.search(r'sni=([^&]+)', params)
+            if sni_match:
+                sni = sni_match.group(1)
+            
+            security_match = re.search(r'security=([^&]+)', params)
+            if security_match:
+                security = security_match.group(1)
+            
+            flow_match = re.search(r'flow=([^&]+)', params)
+            if flow_match:
+                flow = flow_match.group(1)
+        
+        # URL 解码 name
+        if name:
+            from urllib.parse import unquote
+            name = unquote(name.replace('#', ''))
+        else:
+            name = 'Unknown'
+        
+        return {
+            'type': 'vless',
+            'name': name,
+            'server': server,
+            'port': int(port),
+            'uuid': uuid,
+            'security': security,
+            'flow': flow,
+            'sni': sni
+        }
+    except:
+        return None
+
 def parse_ss(uri):
     """解析 ss:// 链接"""
     try:
@@ -186,6 +233,8 @@ def parse_subscription(text):
         node = None
         if line.startswith('vmess://'):
             node = parse_vmess(line)
+        elif line.startswith('vless://'):
+            node = parse_vless(line)
         elif line.startswith('trojan://'):
             node = parse_trojan(line)
         elif line.startswith('ss://'):
