@@ -381,7 +381,12 @@ def main():
         print(f"\n{GREEN}✓ 已生成 {len(xrayr_nodes)} 个节点配置（固定映射）{PLAIN}")
     
     # 7. 保存配置
-    config_path = os.path.join(XRAYR_PATH, 'config.yml')
+    # 检查 XrayR 是否已安装
+    if os.path.exists(XRAYR_PATH):
+        config_path = os.path.join(XRAYR_PATH, 'config.yml')
+    else:
+        print(f"{YELLOW}⚠ 未检测到 XrayR 安装目录 ({XRAYR_PATH})，配置将保存到当前目录{PLAIN}")
+        config_path = './config.yml'
     
     # 备份原配置
     if os.path.exists(config_path):
@@ -419,13 +424,16 @@ def main():
         return
     
     # 8. 重启服务
-    restart = get_input("\n是否重启 XrayR 服务? (y/n)", "y")
-    if restart.lower() == 'y':
-        try:
-            subprocess.run(['systemctl', 'restart', 'xrayr'], check=True)
-            print(f"{GREEN}✓ XrayR 服务已重启{PLAIN}")
-        except:
-            print(f"{RED}❌ XrayR 重启失败，请手动执行: systemctl restart xrayr{PLAIN}")
+    if os.path.exists(XRAYR_PATH):
+        restart = get_input("\n是否重启 XrayR 服务? (y/n)", "y")
+        if restart.lower() == 'y':
+            try:
+                subprocess.run(['systemctl', 'restart', 'xrayr'], check=True)
+                print(f"{GREEN}✓ XrayR 服务已重启{PLAIN}")
+            except:
+                print(f"{RED}❌ XrayR 重启失败，请手动执行: systemctl restart xrayr{PLAIN}")
+    else:
+        print(f"\n{YELLOW}提示: 配置已生成，请先安装 XrayR 后将 config.yml 复制到 /etc/XrayR/{PLAIN}")
     
     print(f"\n{CYAN}{'='*60}{PLAIN}")
     print(f"{GREEN}配置生成完成！{PLAIN}")
